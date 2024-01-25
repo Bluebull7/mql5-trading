@@ -68,3 +68,48 @@ void OpenTrade(string Symbol,
 	}
 }
 
+//--- SetType FillingBySymbol
+ENUM_ORDER_TYPE_FILLING SetTypeFillingBySymbol(const string symbol)
+{
+
+	// Get possible filling policy types by symbol
+	uint filling = (uint)SymbolInfoInteger(symbol, SYMBOL_FILLING_MODE);
+
+	if ((Filling & SYMBOL_FILLING_FOK) == SYMBOL_FILLING_FOK)
+	{
+		return ORDER_FILLING_FOK;
+	}
+	else if ((filling & SYMBOL_FILLING_IOCO) == SYMBOL_FILLING_IOC)
+	{
+		return ORDER_FILLING_IOC;
+	}
+
+}
+
+//--- GetMinTradeLevel
+double GetMinTradeLevel(string symbol)
+{
+	double minLevel = -1.0;
+	double freezeLevel= -1.0;
+	double stopsLevel = -1.0;
+
+	freezeLevel = (double)SymbolInfoInteger(symbol, SYMBOL_TRADE_FREEZE_LEVEL);
+	stopsLevel = (double)SymbolInfoInteger(symbol, SYMBOL_TRADE_STOPS_LEVEL);
+	minLevel = MathMax(freezeLevel, stopsLevel);
+
+	if (freezeLevel == -1 || stopsLevel == -1 || minLevel == -1)
+	{
+		Print("Freeze level or Stops Level not available for the symbol (-1) ");
+		return 0;
+	}
+
+	if (minLevel <= 100.0 && minLevel >= 0.0)
+		minLevel += 1.0;
+	else if (minLevel >= 100.0)
+		minLevel = 100.0;
+	
+	return minLevel;
+}
+
+//---
+
