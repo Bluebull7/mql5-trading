@@ -1,4 +1,8 @@
-enum TradeType
+//--START--//
+
+//--SIMPLE CLASS FOR IMPLEMENTING OPEN TRADE OPERATIONS IN METATRADER EA (MQL) --//
+
+enum TradeType //DEFINE TRADE TYPES
 
 {
 
@@ -21,12 +25,13 @@ void onStart()
 	OpenTrade(Symbol(), (ENUM_ORDER_TYPE)OrderType, Lots, dev, TakeProfit, StopLoss, commt, magic);
 }
 
-void OpenTrade(string Symbol,
-
-	ENUM_ORDER_TYPE orderType, Lots, double volume, int deviation, double stopLossPoints, double takeProfitPoints, string comment, ulong magicNumber)
+void OpenTrade	(string Symbol,ENUM_ORDER_TYPE orderType, Lots, double volume,
+ int deviation, double stopLossPoints, double takeProfitPoints, string comment,
+  ulong magicNumber)
+  
 {
-	
 	{
+		//GETTER AND SETTER METHODS		
 		double getpoints = SymbolInfoDouble(symbol, SYMBOL_POINT);
 		double getask = SymbolInfoDouble(symbol, SYMBOL_ASk);
 		double getbid = SymbolInfoDouble(symbol, SYMBOL_BID);
@@ -111,5 +116,5 @@ double GetMinTradeLevel(string symbol)
 	return minLevel;
 }
 
-//---
+//--- END
 
